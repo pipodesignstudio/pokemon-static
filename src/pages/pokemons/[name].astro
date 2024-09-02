@@ -4,6 +4,9 @@ import type { PokemonListResponse } from "../../interfaces/pokemon-list-response
 
 import MainLayout from "../../layouts/MainLayout.astro";
 import PokemonCard from "@components/pokemons/PokemonCard.astro";
+import Title from "@components/shared/Title.astro";
+
+import {Icon} from 'astro-icon/components'
 
 export const getStaticPaths = (async () => {
   const resp = await fetch("https://pokeapi.co/api/v2/pokemon?limit=151");
@@ -25,8 +28,14 @@ const audioSrc = `https://raw.githubusercontent.com/PokeAPI/cries/main/cries/pok
 <MainLayout title="Main Layout">
   <section class="mt-10 mx-10 flex flex-col justify-center items-center">
     <div>
-      <a class="hover:text-blue-500" href="/">Regresar</a>
-      <h1 class="text-3xl capitalize">{name}</h1>
+      <div class="flex flex-row">
+        <a class="hover:text-blue-500" href="/">Regresar</a>
+      <Title>{name}</Title>
+      <button id="btn-favorite" data-name={name} data-id={id}>
+        <Icon name="heart-line" size={30}></Icon>
+        <Icon class="hidden" name="heart-full" size={30}></Icon>
+      </button>
+      </div>
       <PokemonCard url={url} name={name} isBig />
       <audio controls class="mt-5">
         <source src={audioSrc} type="audio/ogg" />
@@ -35,3 +44,30 @@ const audioSrc = `https://raw.githubusercontent.com/PokeAPI/cries/main/cries/pok
     </div>
   </section>
 </MainLayout>
+
+<style>
+#btn-favorite {
+  @apply hover:animate-pulse
+}
+</style>
+
+<script>
+  interface FavoritePokemon {
+    name:string;
+    id: number;
+  }
+
+  document.addEventListener('astro:page-load', () => {
+    const btnFavorite = document.querySelector('#btn-favorite') as HTMLButtonElement;
+    if (!btnFavorite) return;
+    const name = btnFavorite.dataset.name;
+    const id = btnFavorite.dataset.id;
+
+    btnFavorite.addEventListener('click', () => {
+
+    })
+  })
+
+  
+
+</script>

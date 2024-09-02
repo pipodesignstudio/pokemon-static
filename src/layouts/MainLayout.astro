@@ -10,7 +10,11 @@ interface Props {
 	description?:string;
 }
 
-const {title = siteInfo.title} = Astro.props;
+const {
+  title = siteInfo.title,
+  description = siteInfo.description,
+  image,
+} = Astro.props;
 ---
 
 <html lang="en">
@@ -20,11 +24,19 @@ const {title = siteInfo.title} = Astro.props;
 		<meta name="viewport" content="width=device-width" />
 		<meta name="generator" content={Astro.generator} />
 		<title>{title}</title>
+		<!-- SEO -->
+		<meta name="description" content={description} />
+		<meta name="author" content={'Pokemon'} />
+	
+		<!-- OG Metatags -->
+		<meta property="og:title" content={title} />
+		<meta property="og:description" content={description} />
+		<meta property="og:image" content={image} />
 		<ViewTransitions />
 	</head>
-	<body class="bg-slate-800 text-slate-100 m-auto max-w-6xl p-3 md:p-0">
+	<body class="bg-slate-800 text-slate-100">
 		<NavBar />
-		<main>
+		<main class="m-auto max-w-6xl p-3 md:p-0">
 			<slot />
 		</main>
 	</body>
