@@ -6,8 +6,6 @@ import MainLayout from "../layouts/MainLayout.astro";
 const resp = await fetch('https://pokeapi.co/api/v2/pokemon');
 const data = await resp.json() as PokemonListResponse;
 
-console.log(data);
-
 ---
 
 <MainLayout title="Pokemon Static">
